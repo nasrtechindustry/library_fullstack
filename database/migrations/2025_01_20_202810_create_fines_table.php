@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('fines', function (Blueprint $table) {
             $table->id();
-            $table->longText('title');
-            $table->foreignId('genre_id')->constrained('genres');
-            $table->string('copies');
-            $table->year('publication_year')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $table->foreignId('loan_id')->constrained('loans')->onDelete('cascade');
+            $table->decimal('fine_amount' ,10 ,2);
+            $table->timestamp('fine_date')->default(now());
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('fines');
     }
 };

@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('loan_status', function (Blueprint $table) {
             $table->id();
-            $table->longText('title');
-            $table->foreignId('genre_id')->constrained('genres');
-            $table->string('copies');
-            $table->year('publication_year')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $table->string('status_name');
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('loan_status');
     }
 };
