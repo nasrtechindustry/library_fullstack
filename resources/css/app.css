@@ -1,0 +1,76 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+body{
+    overflow: hidden !important;
+}
+
+.bg-image{
+    background: url('../../public/lms_bg.jpeg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.bg-custom{
+    background: rgb(57, 27, 112);
+    color: white;
+}
+
+.bg-custom-gradient{
+    background: linear-gradient(90deg, rgb(57, 27, 112) , rgba(57, 27, 112, 0.8));
+    color: white;
+}
+.glass{
+    background-color: transparent;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px #00000033;
+}
+.header-text {
+    font-family: 'Figtree', sans-serif;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.intro-section {
+    text-align: center;
+    padding: 20px 0;line-height: 2;
+}
+
+.intro-section h2 {
+    font-weight: 500;
+}
+
+.intro-section p {
+    font-size: 1.2rem;
+    color: white;
+}
+.navigation ul li a{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.navigation{
+    margin-top: 10px;
+    position: fixed;
+    overflow: hidden;
+    
+}
+.custom-flow{
+    margin-top: 50px;
+    background-color: rgba(36, 36, 36, 0.14);
+    height: 100vh;
+    overflow: auto !important;
+
+}
