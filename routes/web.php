@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\LoansController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ProfileController;
@@ -22,6 +24,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('members', MembersController::class);
     Route::resource('reports', ReportsController::class);
     Route::resource('returns', ReturnsController::class);
+    
+    Route::get('/genre' , [GenreController::class, 'create'])->name('genre.create');
+    Route::get('/genre' , [GenreController::class, 'store'])->name('genre.store');
+    Route::get('/author' , [AuthorController::class, 'store'])->name('author.store');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

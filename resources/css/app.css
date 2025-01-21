@@ -10,7 +10,9 @@
 body{
     overflow: hidden !important;
 }
-
+.index{
+    z-index: 10;
+}
 .bg-image{
     background: url('../../public/lms_bg.jpeg') !important;
     background-repeat: no-repeat;

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->longText('title');
             $table->foreignId('genre_id')->constrained('genres');
-            $table->string('copies');
+            $table->string('copies')->default(0);
             $table->year('publication_year')->nullable();
             $table->softDeletes();
             $table->timestamps();

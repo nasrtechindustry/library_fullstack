@@ -10,7 +10,7 @@
         <main class="flex-1 bg-gray-100 p-6 custom-flow">
             <div>
                 <!-- Place main dashboard content here -->
-                Loans
+                loans details goes here
             </div>
         </main>
     </div>
