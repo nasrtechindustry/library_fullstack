@@ -98,10 +98,11 @@
                                             </tr>
                                             @endforelse
                                         </tbody>
-                                        <div class="d-flex justify-content-center mt-4">
-                                            {{ $books->links() }}
-                                        </div>
+                                        
                                     </table>
+                                    <div class="d-flex justify-content-end my-3">
+                                            {{ $books->links() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

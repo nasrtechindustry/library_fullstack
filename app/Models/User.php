@@ -48,4 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+
+    /**
+     * Summary of student
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne<Student, User>
+     */
+    public function student(){
+        return $this->hasOne(Student::class);
+    }
 }

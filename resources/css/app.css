@@ -71,8 +71,71 @@ body{
 }
 .custom-flow{
     margin-top: 50px;
+    margin-bottom: 50px !important;
     background-color: rgba(36, 36, 36, 0.14);
     height: 100vh;
     overflow: auto !important;
+    padding-bottom: 20px;
 
+}
+.custom-flow-b{
+    margin-bottom: 50px !important;
+    height: 100vh;
+    overflow: auto !important;
+    background-color: rgba(22, 0, 63, 0.381) ;
+    padding-bottom: 20px;
+
+}
+.pending{
+    background-color: yellow;
+    text-align: center;
+    border: 1px solid grey;
+    padding: 2px 4px;
+    border-radius: 5px;
+    color: rgb(120, 85, 85);
+}
+
+.approved{
+    background-color: green;
+    text-align: center;
+    border: 1px solid rgb(136, 255, 0);
+    padding: 2px 4px;
+    border-radius: 5px;
+    color: rgb(252, 248, 248);
+}
+
+
+.card-custom{
+    background-color: rgb(37, 4, 98) !important;
+}
+
+.text-custom{
+    color: rgb(89, 0, 255) !important;
+}
+
+.rule-card{
+    background-color: rgb(37, 4, 98) !important;
+}
+
+.btn-custom{
+    background-color: rgb(89, 0, 255) !important;
+    color: wheat !important;
+}
+
+.input-search{
+    background-color: rgba(33, 2, 91, 0.467)  !important;
+    color: white !important;
+    appearance: none;
+}
+
+.input-search::placeholder{
+    color: white !important;
+    appearance: none; /* Removes default browser styles */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none;
+}
+
+.guest-width{
+    width: 550px !important;
+    max-width: 90%;
 }

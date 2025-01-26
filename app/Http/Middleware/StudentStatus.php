@@ -1,0 +1,32 @@
+<?php
+
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class StudentStatus
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (auth()->check() && auth()->user()->roles === 'student') {
+            $student = auth()->user()->student; 
+
+            if ($student && $student->status === 'pending' ) {
+                auth()->logout();
+                return response()->view('auth.login', ['error' => 'Your account is pending approval. Seek Librarion For Approval']);
+            }else{
+                return redirect('/')->with('success', 'You are loggen as Student');
+            }
+        }
+    
+        return $next($request);
+    }
+}

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Library Management System</title>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- Fonts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -17,12 +19,12 @@
 
 </head>
 
-<body class="bg-image">
-    <div class="wave">
+<body class="bg-image ">
+    <div class=" ">
         <div class="min-vh-100 ">
-            <div class=" px-3">
+            <div class=" p-0">
                 <!-- Header Section -->
-                <header class="bg-custom-gradient row py-3 d-flex align-items-center justify-content-between glass">
+                <header class="row py-3 px-3 d-flex align-items-center justify-content-between glass">
                     <div class="col-md-6 col-12 mb-2 mb-md-0 text-center text-md-start">
                         <h1 class="header-text display-6">
                             Library Management System
@@ -32,7 +34,28 @@
                         @if (Route::has('login'))
                         <nav>
                             @auth
-                            <a href="{{ url('/dashboard') }}" class="btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">Dashboard</a>
+                            <div class="d-flex">
+                                @if (auth()->check() && auth()->user()->roles === 'student')
+                                <a href="#" class="d-flex align-items-center text-info nav-link me-2 mb-2 mb-md-0">
+                                    Welcome back {{ auth()->user()->first_name }}
+                                </a>
+                                <a href="#" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
+                                    Profile
+                                </a>
+                                @else
+                                <a href="{{ url('/dashboard') }}" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
+                                    Dashboard
+                                </a>
+                                @endif
+
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('You are about to sign out the library')">
+                                    @csrf
+                                    @method('post')
+                                    <button class="btn btn-outline-danger">Logout</button>
+                                </form>
+                            </div>
+
                             @else
                             <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm  me-2 mb-2 mb-md-0">Log in</a>
                             @if (Route::has('register'))
@@ -45,21 +68,181 @@
                 </header>
 
                 <!-- Main Section -->
-                <main class="mt-4 p-3">
-                    <section class="intro-section p-4 rounded glass mx-auto" style="max-width: 1900px;">
-                        <h2>Welcome to the Library Management System</h2>
-                        <p>
-                            The Library Management System helps you to manage, organize, and access your library's resources efficiently.
-                            Enjoy a seamless experience whether you're borrowing books, maintaining records, or exploring collections.
-                        </p>
-                        <p>
-                            Please log in or register to get started and explore all the features we have to offer.
-                        </p>
-                        <div class="container">
-                            <a href="{{ route('login') }}" class="btn btn-primary me-2 mb-2 mb-md-0 w-25">Join</a>
+                <main class="custom-flow-b mb-5">
+
+                    @auth
+
+                    <section class=" container intro-section rounded mx-auto">
+                        <div class="text-light text-center">
+                            You are loggen as Student
+                        </div>
+                        <div class=" mt-5">
+                            <!-- Search Bar -->
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <form method="GET" action="" class="d-flex">
+                                        <select name="searchby" id="searchby" class="form-control me-2 w-25 input-search">
+                                            <option selected>Search By</option>
+                                            <option value="">Book</option>
+                                            <option value="">Author</option>
+                                            <option value="">Genre</option>
+                                        </select>
+                                        <input type="text" name="query" class="form-control me-2 input-search" placeholder="Search for books, authors, or genres..." value="{{ request('query') }}">
+                                        <button type="submit" class="btn btn-outline-primary">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Books List -->
+                            <div class="row">
+                                @foreach ($books as $book)
+                                <div class="col-md-4 mb-5">
+                                    <div class="card shadow-lg rounded card-custom p-4">
+                                        <div class="card-body">
+                                            <div class="row justify-content-between">
+                                                <div class="col-md-4">
+                                                    @if ($book->image_url)
+                                                    <img src="{{ $book->image_url }}" class="card-img-top p-4" alt="Book Image">
+                                                    @else
+                                                    <!-- Fallback to book icon if no image -->
+                                                    <i class="fas fa-book text-left shadow p-4" style="font-size: 100px; color: blue; width: 100%;"></i>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-8 ">
+                                                    <h5 class="card-title text-custom" style="max-width: 200px;">{{ $book->title }}</h5>
+
+                                                    <!-- Display authors for the current book -->
+                                                    <div class="mb-3">
+                                                        @foreach ($book->authors as $author)
+                                                        <p class="text-white">By: {{ $author->firstname }}</p>
+                                                        @endforeach
+                                                    </div>
+
+                                                    <!-- Description -->
+                                                    <p class="card-text">{{ Str::limit($book->description, 100) }}</p>
+
+                                                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-outline-info btn-sm">View Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Pagination links for books -->
+                            <div class="d-flex justify-content-center mt-4">
+                                {{ $books->links() }}
+                            </div>
                         </div>
                     </section>
-                    
+
+
+
+                    @else
+                    <section class="bg-transparent rules-section py-5 px-4 bg-light rounded shadow-sm mx-auto mb-5 " style="max-width: 1200px;">
+                        <h1 class="display-4 fw-bold text-primary text-center ">Welcome to the Library </h1>
+                        <!-- <p class="text-custom text-center mt-3">
+                            Your gateway to knowledge, resources, and academic success. Explore, learn, and grow with ease.
+                        </p> -->
+                       
+
+                        <h2 class="text-center text-primary mb-4" style="font-weight: bold; font-size: 2.5rem;">
+                            Library Rules & Guidelines
+                        </h2>
+                        <p class="text-center text-secondary mb-5" style="font-size: 1.2rem;">
+                            Ensure a productive and respectful environment by following these rules.
+                        </p>
+
+                        <div class="row g-4 ">
+                            <!-- Rule 1 -->
+                            <div class="col-md-6 ">
+                                <div class="rule-card d-flex align-items-start p-4 rounded shadow-sm">
+                                    <i class="fas fa-book-reader text-primary me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card">
+                                        <h5 class="fw-bold mb-2 text-custom">Respect Library Resources</h5>
+                                        <p class="text-secondary mb-0">
+                                            Handle all books, equipment, and resources with care. Return borrowed items on time to avoid penalties.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 2 -->
+                            <div class="col-md-6">
+                                <div class="rule-card d-flex align-items-start p-4 rounded shadow-sm">
+                                    <i class="fas fa-volume-mute text-danger me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card">
+                                        <h5 class="fw-bold mb-2 text-custom">Maintain Silence</h5>
+                                        <p class="text-secondary mb-0">
+                                            Respect the quiet atmosphere. Keep noise to a minimum and use designated areas for group discussions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 3 -->
+                            <div class="col-md-6">
+                                <div class="rule-card d-flex align-items-start p-4  rounded shadow-sm">
+                                    <i class="fas fa-clock text-warning me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card">
+                                        <h5 class="fw-bold mb-2 text-custom">Adhere to Library Hours</h5>
+                                        <p class="text-secondary mb-0">
+                                            Use the library during official hours. Ensure you complete all transactions before closing time.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 4 -->
+                            <div class="col-md-6">
+                                <div class="rule-card d-flex align-items-start p-4 rounded shadow-sm">
+                                    <i class="fas fa-user-shield text-success me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card">
+                                        <h5 class="fw-bold mb-2 text-custom">Respect Others</h5>
+                                        <p class="text-secondary mb-0">
+                                            Be considerate of other users. Avoid disruptive behaviors and treat everyone with respect.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 5 -->
+                            <div class="col-md-6">
+                                <div class="rule-card d-flex align-items-start p-4  rounded shadow-sm">
+                                    <i class="fas fa-laptop text-info me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card ">
+                                        <h5 class="fw-bold mb-2 text-custom">Use Technology Responsibly</h5>
+                                        <p class="text-secondary mb-0">
+                                            Utilize library computers and internet access for academic or research purposes only.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Rule 6 -->
+                            <div class="col-md-6">
+                                <div class="rule-card d-flex align-items-start p-4  rounded shadow-sm">
+                                    <i class="fas fa-trash-alt text-danger me-4" style="font-size: 2.5rem;"></i>
+                                    <div class="rule-card ">
+                                        <h5 class="fw-bold mb-2 text-custom">Keep the Space Clean</h5>
+                                        <p class="text-secondary mb-0">
+                                            Dispose of trash in designated bins and leave study areas tidy for the next user.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <a href="#" class="btn btn-primary px-4 py-2 rounded-pill shadow">
+                                Learn More About Library Policies
+                            </a>
+                        </div>
+                    </section>
+
+                    @endauth
+
                 </main>
             </div>
         </div>
