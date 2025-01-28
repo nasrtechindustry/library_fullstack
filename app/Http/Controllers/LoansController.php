@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
 use Illuminate\Http\Request;
 
 class LoansController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('dashboard.loans.loans');
+
+        $loans = Loan::with(['student', 'book'])->paginate(10);
+
+
+        return view('dashboard.loans.index', compact('loans'));
     }
 
     /**
@@ -35,7 +40,10 @@ class LoansController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $loan = Loan::where('id', $id)->with(['book', 'student'])->first();
+        if ($loan) {
+            return view('dashboard.loans.show', compact('loan'));
+        }
     }
 
     /**
@@ -43,7 +51,7 @@ class LoansController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -59,6 +67,10 @@ class LoansController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $loan = Loan::where('id', $id)->first();
+        if ($loan) {
+            $loan->delete();
+            return redirect()->back()->with('success', 'The book successfully returned');
+        }
     }
 }

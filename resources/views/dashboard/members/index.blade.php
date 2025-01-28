@@ -69,7 +69,7 @@
                                         <td>{{ $student->student->first_name }} {{ $student->student->last_name }}</td>
                                         <td>{{ $student->student->email }}</td>
                                         <td>
-                                            {!!$student->status == 'pending' ? '<p class="pending">pending</p>' : '<p class="approved">approved</p>' !!}
+                                            {!!$student->status == 'pending' ? '<p class="badge bg-warning">pending</p>' : '<p class="badge bg-success">approved</p>' !!}
                                         </td>
                                         <td class="text-center d-flex justify-content-center gap-3">
 

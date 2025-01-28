@@ -11,7 +11,7 @@
             </h1>
         </div>
         @if (session('error'))
-        <div class="alert alert-warning alert-dismissible">
+        <div class="alert alert-danger alert-dismissible">
             {{session('error')}}
             <button class="btn btn-close"></button>
         </div>

@@ -8,29 +8,108 @@
 
         <!-- Main Content -->
         <main class="flex-1 bg-gray-100 p-6 custom-flow">
-            <div>
-                <!-- Place main dashboard content here -->
-                dashboard cards will be here
-                @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+        <p class="mb-3 text-custom">Welcome Again {{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+        <hr>
+            <div class="container mt-4">
+                <div class="row">
+                    <!-- Total Students Card -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg">
+                            <div class="card-header p-3 bg-primary text-white text-center ">
+                                <h4 class="card-title mb-0">
+                                    <i class="fas fa-users"></i> Total Students
+                                </h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <h3 class="display-4">{{ $totalStudents }}</h3>
+                                <p class="text-muted">Number of registered students</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Loaned Books Card -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg">
+                            <div class="card-header p-3 bg-success text-white text-center">
+                                <h4 class="card-title mb-0">
+                                    <i class="fas fa-book"></i> Total Loaned Books
+                                </h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <h3 class="display-4">{{ $totalLoanedBooks }}</h3>
+                                <p class="text-muted">Number of books currently loaned out</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total Revenue Card -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-lg">
+                            <div class="card-header p-3 bg-warning text-white text-center">
+                                <h4 class="card-title mb-0">
+                                    <i class="fas fa-dollar-sign"></i> Total Revenue
+                                </h4>
+                            </div>
+                            <div class="card-body text-center">
+                                <!-- Revenue Total Display -->
+                                <h3 class="display-4">{{ number_format($totalRevenue) }} Tsh</h3>
+                                <p class="text-muted">Total revenue from fines</p>
+
+                                <!-- Chart Canvas -->
+                                <canvas id="revenueChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Script for Chart.js -->
+
                 </div>
-                @endif
-
-                @if (session('error') )
-
-                <div class="alert alert-dismissible alert-danger">
-                    {{session('error')}}
-                </div>
-                    
-                @endif
             </div>
+
+
         </main>
     </div>
 </x-app-layout>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'line', // Type of chart (line, bar, etc.)
+        data: {
+            labels: @json($months), // Array of months or time periods for the x-axis
+            datasets: [{
+                label: 'Revenue Over Time',
+                data: @json($revenueData), // Array of revenue data for each month or time period
+                borderColor: 'rgba(255, 159, 64, 1)', // Color of the line
+                backgroundColor: 'rgba(255, 159, 64, 0.2)', // Color of the area under the line
+                fill: true, // Fills the area under the line
+                tension: 0.1, // Smooths the line
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.raw + ' Tsh'; // Adding "Tsh" to the tooltip
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

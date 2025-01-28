@@ -29,16 +29,6 @@ class BooksController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // $genres = Genre::all();
-
-        // return view('dashboard.books.books' ,compact('genres'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(BookRequest $request)
@@ -48,14 +38,11 @@ class BooksController extends Controller
 
         // Handle file upload
         if ($request->hasFile('book_file') && $request->file('book_file')->isValid()) {
-            // Store the PDF file in the 'public' disk and get the file path
             $filePath = $request->file('book_file')->store('books/pdfs', 'public');
         } else {
             // Default to null if no file is uploaded
             $filePath = null;
         }
-
-
 
         // Create a new book record with the validated data and file path
         $book = Book::create([

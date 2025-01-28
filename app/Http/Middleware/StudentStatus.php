@@ -21,7 +21,7 @@ class StudentStatus
 
             if ($student && $student->status === 'pending' ) {
                 auth()->logout();
-                return response()->view('auth.login', ['error' => 'Your account is pending approval. Seek Librarion For Approval']);
+                return redirect(route('login'))->with('error' , 'Your Account is Inactive wait for approval');
             }else{
                 return redirect('/')->with('success', 'You are loggen as Student');
             }

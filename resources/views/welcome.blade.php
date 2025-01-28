@@ -121,7 +121,7 @@
                                                     <!-- Description -->
                                                     <p class="card-text">{{ Str::limit($book->description, 100) }}</p>
 
-                                                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-outline-info btn-sm">View Details</a>
+                                                    <a href="{{ route('library.show', $book->id) }}" class="btn btn-outline-info btn-sm">View Details</a>
                                                 </div>
                                             </div>
                                         </div>

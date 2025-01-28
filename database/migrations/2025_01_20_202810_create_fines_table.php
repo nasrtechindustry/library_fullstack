@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('loan_id')->constrained('loans')->onDelete('cascade');
+            $table->foreignId('loan_id')->constrained('loans')->onDelete('set null');
             $table->decimal('fine_amount' ,10 ,2);
             $table->timestamp('fine_date')->default(now());
         });
