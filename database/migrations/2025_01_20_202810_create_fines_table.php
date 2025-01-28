@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('loan_id')->constrained('loans')->onDelete('set null');
+            $table->unsignedBigInteger('loan_id')->nullable();
             $table->decimal('fine_amount' ,10 ,2);
             $table->timestamp('fine_date')->default(now());
+            $table->foreign('loan_id')->references('id')->on('loans')->onDelete('set null');
+
         });
     }
 
