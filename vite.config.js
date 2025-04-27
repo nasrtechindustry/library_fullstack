@@ -8,7 +8,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    base: process.env.APP_URL + '/', // This ensures Vite uses the correct base URL (HTTPS)
     server: {
         https: process.env.APP_ENV !== 'local',
-    }
+    },
 });
