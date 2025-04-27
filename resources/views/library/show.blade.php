@@ -41,9 +41,7 @@
                                 <a href="#" class="d-flex align-items-center text-info nav-link me-2 mb-2 mb-md-0">
                                     Welcome back {{ auth()->user()->first_name }}
                                 </a>
-                                <a href="#" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
-                                    Profile
-                                </a>
+                                <!--  -->
                                 @else
                                 <a href="{{ url('/dashboard') }}" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
                                     Dashboard

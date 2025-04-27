@@ -16,18 +16,19 @@ class StudentController extends Controller
      * Summary of store
      * @return void
      */
-    public function store(StudentRequest $request): RedirectResponse{
+    public function store(StudentRequest $request)
+    {
         $validated = $request->all();
         $validated['password'] = $validated['last_name'];
         $reg_no = $validated['reg_no'];
 
-        if ($validated['roles'] == 'student'){
+        if ($validated['roles'] == 'student') {
 
             $user = User::create($validated);
 
             event(new Registered($user));
 
-            if ($user){
+            if ($user) {
                 $user_id = $user->id;
 
                 Student::create([
@@ -39,9 +40,8 @@ class StudentController extends Controller
             }
 
 
-            return redirect()->back()->with('success' , 'Student registered successully ');
+            return redirect()->back()->with('success', 'Student registered successully ');
         }
-
     }
     /**
      * Summary of approve
@@ -73,16 +73,17 @@ class StudentController extends Controller
 
     /** */
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $student = Student::findOrFail($id);
         if ($student) {
             $delete = $student->user_id;
             $user =  User::findOrFail($delete);
-            if ($user){
+            if ($user) {
                 $user->delete();
-                return redirect()->back()->with('success' , 'Student  '.$student->reg_no.' successfully deleted');
+                return redirect()->back()->with('success', 'Student  ' . $student->reg_no . ' successfully deleted');
             }
         }
-        return redirect()->back()->with('error' , "Fail to find that student");
+        return redirect()->back()->with('error', "Fail to find that student");
     }
 }

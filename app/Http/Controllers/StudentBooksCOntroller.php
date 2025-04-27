@@ -51,7 +51,7 @@ class StudentBooksCOntroller extends Controller
         $loan = Loan::where('book_id', $id)->first();
 
         if ($loan) {
-            return redirect()->back()->with("error", "You have already request this book please visit the library");
+            return redirect()->back()->with("error", "This book is not available");
         }
         $loaned = Loan::insert([
             'student_id' => $student->id,

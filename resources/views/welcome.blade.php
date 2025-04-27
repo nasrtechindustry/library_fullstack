@@ -39,9 +39,7 @@
                                 <a href="#" class="d-flex align-items-center text-info nav-link me-2 mb-2 mb-md-0">
                                     Welcome back {{ auth()->user()->first_name }}
                                 </a>
-                                <a href="#" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
-                                    Profile
-                                </a>
+
                                 @else
                                 <a href="{{ url('/dashboard') }}" class="d-flex align-items-center btn btn-outline-primary btn-sm me-2 mb-2 mb-md-0">
                                     Dashboard
@@ -78,7 +76,7 @@
                         </div>
                         <div class=" mt-5">
                             <!-- Search Bar -->
-                            <div class="row mb-4">
+                            <!-- <div class="row mb-4">
                                 <div class="col-md-12">
                                     <form method="GET" action="" class="d-flex">
                                         <select name="searchby" id="searchby" class="form-control me-2 w-25 input-search">
@@ -91,6 +89,10 @@
                                         <button type="submit" class="btn btn-outline-primary">Search</button>
                                     </form>
                                 </div>
+                            </div> -->
+
+                            <div class="text-center text-custom " style="font-size: 28px">
+                                This is the list of all books in the library
                             </div>
 
                             <!-- Books List -->
@@ -112,9 +114,10 @@
                                                     <h5 class="card-title text-custom" style="max-width: 200px;">{{ $book->title }}</h5>
 
                                                     <!-- Display authors for the current book -->
-                                                    <div class="mb-3">
+                                                    <div class="mb-3 d-flex  justify-content-center gap-2 flex-wrap">
+                                                        <p>By:</p>
                                                         @foreach ($book->authors as $author)
-                                                        <p class="text-white">By: {{ $author->firstname }}</p>
+                                                        <p class="text-white">{{ $author->firstname }}</p>
                                                         @endforeach
                                                     </div>
 
@@ -145,7 +148,7 @@
                         <!-- <p class="text-custom text-center mt-3">
                             Your gateway to knowledge, resources, and academic success. Explore, learn, and grow with ease.
                         </p> -->
-                       
+
 
                         <h2 class="text-center text-primary mb-4" style="font-weight: bold; font-size: 2.5rem;">
                             Library Rules & Guidelines
@@ -234,17 +237,27 @@
                             </div>
                         </div>
 
-                        <div class="text-center mt-5">
-                            <a href="#" class="btn btn-primary px-4 py-2 rounded-pill shadow">
-                                Learn More About Library Policies
-                            </a>
-                        </div>
+
                     </section>
 
                     @endauth
 
                 </main>
             </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal" id="profile">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="profile">
+                    View Profile
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 

@@ -8,4 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        https: process.env.APP_ENV !== 'local',
+    }
 });

@@ -97,7 +97,7 @@
                                     <a href="{{ route('loans.index') }}" class="btn btn-info btn-sm me-2">
                                         <i class="fas fa-arrow-left"></i> Back to Loans
                                     </a>
-                                    <button onclick="printCard()" class="btn btn-secondary  btn-sm">Print Statement</button>
+                                    <button type="button" onclick="printCard()" class="btn btn-secondary  btn-sm">Print Statement</button>
 
                                     <button type="submit" class="btn btn-primary btn-sm ">Submit Payment</button>
 

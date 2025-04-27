@@ -76,16 +76,16 @@
 <script>
     var ctx = document.getElementById('revenueChart').getContext('2d');
     var revenueChart = new Chart(ctx, {
-        type: 'line', // Type of chart (line, bar, etc.)
+        type: 'line', 
         data: {
-            labels: @json($months), // Array of months or time periods for the x-axis
+            labels: @json($months), 
             datasets: [{
                 label: 'Revenue Over Time',
-                data: @json($revenueData), // Array of revenue data for each month or time period
-                borderColor: 'rgba(255, 159, 64, 1)', // Color of the line
-                backgroundColor: 'rgba(255, 159, 64, 0.2)', // Color of the area under the line
-                fill: true, // Fills the area under the line
-                tension: 0.1, // Smooths the line
+                data: @json($revenueData), 
+                borderColor: 'rgba(255, 159, 64, 1)', 
+                backgroundColor: 'rgba(255, 159, 64, 0.2)', 
+                fill: true, 
+                tension: 0.1, 
             }]
         },
         options: {
